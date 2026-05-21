@@ -58,25 +58,70 @@ Split responsibilities across three layers and let Windmill be the glue:
    "access revoked" email — again linking to MS Family Safety so parents can
    review the visited sites.
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Kid
+    participant WM as Windmill
+    participant DNS as NextDNS
+    participant Mail as Gmail
+    actor Parents
+
+    Kid->>WM: ✉️ Email request to dhani@…
+    activate WM
+    WM->>DNS: Unblock YouTube
+    WM->>WM: Reschedule revoke → now + 50 min
+    WM-->>Mail: Grant notification
+    Mail-->>Parents: 🟢 Access granted (+ MS Family link)
+    deactivate WM
+
+    Note over Kid,DNS: 🎬 50-minute access window
+
+    rect rgb(255, 235, 235)
+        WM->>WM: ⏱️ Cron fires
+        activate WM
+        WM->>DNS: Block YouTube
+        WM-->>Mail: Revoke notification
+        Mail-->>Parents: 🔴 Access revoked (+ MS Family link)
+        deactivate WM
+    end
+```
+
 ## Architecture
 
-```
-   Kid emails dhani@…
-          │
-          ▼
-  ┌───────────────────────┐
-  │ enable_youtube_access │  (flow, email-triggered)
-  │  1. Unblock NextDNS   │──► NextDNS API
-  │  2. Reschedule disable│──► updates disable_youtube_access cron to now+50m
-  │  3. Send grant email  │──► Gmail
-  └───────────────────────┘
-          ⋮  (50 minutes later)
-          ▼
-  ┌────────────────────────┐
-  │ disable_youtube_access │  (flow, cron-triggered)
-  │  1. Block NextDNS      │──► NextDNS API
-  │  2. Send revoke email  │──► Gmail
-  └────────────────────────┘
+```mermaid
+flowchart TD
+    kid([👦 Kid emails dhani@…]):::actor
+
+    subgraph enable["🟢 enable_youtube_access — email-triggered flow"]
+        direction TB
+        e1["Unblock YouTube"]
+        e2["Reschedule disable cron → now + 50 min"]
+        e3["Send grant email"]
+    end
+
+    subgraph disable["🔴 disable_youtube_access — cron-triggered flow"]
+        direction TB
+        d1["Block YouTube"]
+        d2["Send revoke email"]
+    end
+
+    nextdns[("☁️ NextDNS API")]:::ext
+    gmail[("✉️ Gmail")]:::ext
+    parents([👨‍👩‍👧 Parents]):::actor
+
+    kid -->|email trigger| enable
+    e1 --> nextdns
+    e2 -.->|rewrites schedule| disable
+    e3 --> gmail
+
+    enable -. "⏱️ 50 minutes later" .-> disable
+    d1 --> nextdns
+    d2 --> gmail
+    gmail --> parents
+
+    classDef actor fill:#eef,stroke:#88a,color:#000
+    classDef ext fill:#ffe,stroke:#aa8,color:#000
 ```
 
 ## Components
@@ -126,9 +171,8 @@ All entities live under the `f/betterhome/` folder.
 
 - **Access window** is 50 minutes, hard-coded in `safe_script.py` (cron offset)
   and the email scripts (displayed times).
-- **Notification recipients** are hard-coded in both flow YAMLs:
-  `hpai.bantwal@gmail.com`, `deepthi.malemath@gmail.com`,
-  `nihabantwal@outlook.com`.
+- **Notification recipients** are hard-coded in both flow YAMLs (three parent
+  addresses; see `f/betterhome/*__flow/flow.yaml`).
 - Timestamps in emails use the `Europe/Paris` (CET) timezone; the disable
   schedule uses `Europe/Zurich`.
 
