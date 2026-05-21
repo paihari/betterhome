@@ -2,7 +2,7 @@ codebases: []
 defaultTs: bun
 excludes: []
 includeGroups: false
-includeKey: true
+includeKey: false
 includes:
   - f/**
 includeSchedules: true
