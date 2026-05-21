@@ -1,0 +1,36 @@
+summary: Send Disable Access Email to Parents
+description: ''
+lock: '!inline f/betterhome/jolly_script.script.lock'
+has_on_behalf_of: false
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  properties:
+    body:
+      type: string
+      description: ''
+      default: null
+      originalType: string
+    gmail_resource:
+      type: object
+      description: ''
+      default: null
+      format: resource-gmail
+    subject:
+      type: string
+      description: ''
+      default: null
+      originalType: string
+    to:
+      type: array
+      description: ''
+      default: null
+      items:
+        type: string
+      originalType: string[]
+  required:
+    - gmail_resource
+    - to
+    - subject
+    - body

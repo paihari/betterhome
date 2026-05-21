@@ -1,0 +1,48 @@
+summary: Enable Youtube Access
+description: ''
+value:
+  modules:
+    - id: e
+      summary: Update NextDNS to Enable
+      value:
+        type: script
+        input_transforms: {}
+        is_trigger: false
+        path: f/betterhome/enable_access_to_youtube
+    - id: f
+      summary: Update Disable Scheduler
+      value:
+        type: script
+        input_transforms: {}
+        is_trigger: false
+        path: f/betterhome/safe_script
+    - id: g
+      summary: Send Enable Email
+      value:
+        type: script
+        input_transforms:
+          body:
+            type: static
+            value: Access Enabled
+          gmail_resource:
+            type: static
+            value: $res:f/betterhome/unreal_gmail
+          subject:
+            type: static
+            value: Access Enabled
+          to:
+            type: static
+            value:
+              - hpai.bantwal@gmail.com
+              - deepthi.malemath@gmail.com
+              - nihabantwal@outlook.com
+        is_trigger: false
+        path: f/betterhome/send_enable_access_email_to_parents
+  groups: []
+has_on_behalf_of: false
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order: []
+  properties: {}
+  required: []

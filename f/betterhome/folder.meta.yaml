@@ -1,0 +1,6 @@
+summary: Better Home
+display_name: betterhome
+extra_perms:
+  u/hari: true
+owners:
+  - u/hari

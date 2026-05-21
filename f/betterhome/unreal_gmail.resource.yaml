@@ -1,0 +1,4 @@
+description: ''
+value:
+  token: $var:f/betterhome/unreal_gmail
+resource_type: gmail

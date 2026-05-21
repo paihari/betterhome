@@ -1,0 +1,40 @@
+summary: Disable Youtube Access
+description: ''
+value:
+  modules:
+    - id: c
+      summary: Disable NextDNS Entry
+      value:
+        type: script
+        input_transforms: {}
+        is_trigger: false
+        path: f/betterhome/disable_access_to_youtube
+    - id: d
+      summary: Send Disable Mail
+      value:
+        type: script
+        input_transforms:
+          body:
+            type: static
+            value: Access Revoked
+          gmail_resource:
+            type: static
+            value: $res:f/betterhome/unreal_gmail
+          subject:
+            type: static
+            value: Access Revoked
+          to:
+            type: static
+            value:
+              - hpai.bantwal@gmail.com
+              - deepthi.malemath@gmail.com
+              - niha.bantwal@outlook.com
+        is_trigger: false
+        path: f/betterhome/jolly_script
+  groups: []
+has_on_behalf_of: false
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  properties: {}
+  required: []

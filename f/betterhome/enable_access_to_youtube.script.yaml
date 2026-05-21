@@ -1,0 +1,10 @@
+summary: Enable Access to Youtube
+description: ''
+lock: '!inline f/betterhome/enable_access_to_youtube.script.lock'
+has_on_behalf_of: false
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  properties: {}
+  required: []

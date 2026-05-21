@@ -1,0 +1,29 @@
+name: better-home
+ai_config:
+  code_completion_model:
+    model: claude-sonnet-4-6
+    provider: anthropic
+  default_model:
+    model: claude-sonnet-4-6
+    provider: anthropic
+  providers:
+    anthropic:
+      models:
+        - claude-sonnet-4-6
+      resource_path: u/hari/anthropic_windmill_codegen
+color: '#275f49'
+error_handler: null
+operator_settings:
+  assets: true
+  audit_logs: true
+  folders: true
+  groups: true
+  resources: true
+  runs: true
+  schedules: true
+  triggers: true
+  variables: true
+  workers: true
+slack_oauth_client_id: null
+slack_oauth_client_secret: null
+success_handler: null

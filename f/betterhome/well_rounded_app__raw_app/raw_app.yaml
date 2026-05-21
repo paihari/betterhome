@@ -1,0 +1,5 @@
+summary: UI App
+data:
+  schema: app1
+  tables: []
+public: true
