@@ -13,6 +13,31 @@ ai_config:
       resource_path: u/hari/anthropic_windmill_codegen
 color: '#275f49'
 error_handler: null
+git_sync:
+  repositories:
+    - exclude_types_override: []
+      git_repo_resource_path: $res:f/betterhome/efficient_git_repository
+      group_by_folder: false
+      settings:
+        exclude_path: []
+        extra_include_path: []
+        include_path:
+          - f/**
+        include_type:
+          - script
+          - flow
+          - app
+          - folder
+          - workspacedependencies
+          - resourcetype
+          - resource
+          - schedule
+          - user
+          - trigger
+          - settings
+          - key
+          - variable
+      use_individual_branch: false
 operator_settings:
   assets: true
   audit_logs: true
