@@ -4,7 +4,7 @@ enabled: true
 has_permissioned_as: false
 is_flow: true
 no_flow_overlap: false
-schedule: 46 28 11 23 5 *
+schedule: 59 8 22 23 5 *
 script_path: f/betterhome/disable_youtube_access
 timezone: Europe/Zurich
 ws_error_handler_muted: false
